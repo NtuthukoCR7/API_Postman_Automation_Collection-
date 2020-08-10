@@ -1,0 +1,223 @@
+{
+	"info": {
+		"_postman_id": "167fe935-d099-412a-8cef-27b60665e682",
+		"name": "Postman API Assesment",
+		"description": "- Public API - https://reqres.in/\r\n\r\nBelow are the calls perfomed by the API\r\n- Perfoming an API request to produce a list of all users\r\n- Perfoming an API request to return a single user\r\n- Perfoming an API request to create a new user\r\n- Perfoming an API request to update an existing user\r\n\r\nTests Perfomed using code\r\n- Verifying that the status code is 200 for successful \"GET\" call\r\n- Verifying that \"Michael\" is within the list\r\n- Verifying Status code is 201 for successful \"POST\" call\r\n- Verifying that the value of total_pages is 2\r\n- Verifying Status code is 200 for successful \"PATCH\" call",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Get all users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "3e24a6ce-1b8f-4303-a20a-c2beaa20757c",
+						"exec": [
+							"//confirm the status code is 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"//confirm Michael is part of the list",
+							"pm.test(\"Michael is within the list\", function () {",
+							"    pm.expect(pm.response.text()).to.include(\"Michael\");",
+							"});",
+							"",
+							"// validate that the value of total pages is 2 ",
+							"pm.test(\"Value of total_pages is 2\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.total_pages).to.eql(2);",
+							"});",
+							"",
+							"//Validate the schema",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users?page=2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					],
+					"query": [
+						{
+							"key": "page",
+							"value": "2"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get a user by Id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "52f31c73-f6d2-4027-b81a-939886272bec",
+						"exec": [
+							"//confirm the status code is 200 OK",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "https://reqres.in/api/users/2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0bdc077f-a32f-4c1c-9e95-a3a3283bf404",
+						"exec": [
+							"//confirm status is 201 created",
+							"",
+							"pm.test(\"Status code is 201\", function () {",
+							"    pm.response.to.have.status(201);",
+							"});",
+							"",
+							"",
+							"//confirm job is Automation Tester",
+							"pm.test(\"job is equal to Automation Tester\", function () {",
+							"    var jsonData = pm.response.json();",
+							"    pm.expect(jsonData.job).to.eql(\"Automation Tester\");",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Ntuthuko\",\r\n    \"job\": \"Automation Tester\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "c15358d0-93d4-4fd3-83c5-7793e03b6384",
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"Ntuthuko\",\r\n    \"job\": \"SQA\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://reqres.in/api/users/2",
+					"protocol": "https",
+					"host": [
+						"reqres",
+						"in"
+					],
+					"path": [
+						"api",
+						"users",
+						"2"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "b13ecb54-f2f4-42be-876f-efc220f5c7f4",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "975cc6f1-1380-4579-810d-cc5d0e74130a",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}
